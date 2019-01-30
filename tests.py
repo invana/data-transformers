@@ -1,6 +1,8 @@
 # Created by venkataramana on 29/01/19.
+import json
+
 from executors import ReadFromFile, ReadFromMongo
-from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager
+from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, OutputRenderer
 
 
 class ReadFromFileTest:
@@ -23,4 +25,17 @@ class ReadFromMongoTest:
         mongo_executor.disconnect()
 
 
-ReadFromFileTest()
+class OutputRendererTest:
+    def __init__(self):
+        file_executor = ReadFromFile('samples/crawler_data.json')
+        ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),
+               OTConf('items.item_no', FloatTransform, update_element=True, update_key='item_no_float'),
+               OTConf('items.description', RegexTransform, regex='(\w{5,100})', update_element=True,
+                      update_key='keywords')]
+        ot_manager = OTManager(ops).process(file_executor)
+        print(json.dumps(OutputRenderer(
+            include=['client_info', 'items.url', 'items.title', 'items.description', 'items.item_no']).expand(
+            ot_manager.results), indent=4))
+
+
+OutputRendererTest()

@@ -1,6 +1,7 @@
 # Created by venkataramana on 29/01/19.
 import re
 from copy import deepcopy
+from itertools import chain
 from urllib import parse
 
 
@@ -117,17 +118,61 @@ class RegexTransform(FTBase):
 
 
 class OTBase:
-    def __init__(self, key=None):
-        self._key = key
+    def __init__(self, include=None):
+        self.include = include
 
     def expand(self, objects):
         raise NotImplementedError
 
 
-class ListIterator(OTBase):
+class OutputRenderer(OTBase):
+
+    def _projection(self, _object, _keys):
+        return {key: _object.get(key, None) for key in _keys}
+
+    def _list_projection(self, _list, _keys):
+        return [self._projection(item, _keys) for item in _list]
+
+    @staticmethod
+    def _parse_keys_to_dict(keys):
+        _keys_dict = {}
+        for key in keys:
+            if '.' not in key:
+                _keys_dict.update({key: 0})
+            else:
+                key1, key2 = key.split('.')
+                if key1 in _keys_dict:
+                    _keys_dict[key1].append(key2)
+                else:
+                    _keys_dict.update({key1: [key2]})
+        return _keys_dict
+
+    def _sub_expand(self, _object, keys):
+        """
+        >>>
+            {
+                'client_info':0
+                'items':['url','title','description','item_no']
+            }
+        """
+        keys_dict = self._parse_keys_to_dict(keys)
+        result = []
+        _new_object = {}
+        _new_objects = []
+        for key in keys_dict:
+            if keys_dict[key] is 0:
+                _new_object.update(self._projection(_object, [key]))
+            elif isinstance(keys_dict[key], list):
+                _new_objects += self._list_projection(_object[key], keys_dict[key])
+        for _new_obj in _new_objects:
+            _new_obj.update(_new_object)
+        return _new_objects
+
     def expand(self, objects):
-        for _object in objects[self._key] if self._key else objects:
-            yield _object
+        results = []
+        for _object in objects:
+            results += self._sub_expand(_object, self.include)
+        return results
 
 
 class OTConf:
