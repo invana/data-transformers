@@ -8,7 +8,7 @@
 The behaviour of the field transformers should be as follow:
 
 - apply field transformers on data and add new field or update the existing field
-- tell manager, the path of the field to apply (should mention the traversal of the field and the data types  through wish the path has to be travelled.
+- tell manager, the path of the field to apply (should mention the traversal of the field and the data types  through wish the path has to be travelled).
 - field transformers should be applied one after the other. example: `CleanTitleFieldTf` can be applied first
  and then `NewDocFromSubDocTf` is used to copy the cleaned data into a new collection.
 
@@ -95,9 +95,8 @@ The behaviour of the field transformers should be as follow:
             "item_no": 1
         },
         {
-            "url": "https://www.careers360.com/food-technology-course", /* title cleaned and updated */
-            "domain": "www.careers360.com",
-            "title": "Careers360",
+            "url": "https://www.careers360.com/food-technology-course", 
+            "title": "Careers360", /* title cleaned and updated */
             "description": "involves a blend of physical, chemical or microbiological processes and techniques for transforming raw ingredients into",
             "item_no": 2
         }
