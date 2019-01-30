@@ -6,8 +6,10 @@ from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransf
 class ReadFromFileTest:
     def __init__(self):
         file_executor = ReadFromFile('samples/crawler_data.json')
-        ops = [OTConf('items.url', UrlDomainTransformer), OTConf('items.item_no', FloatTransform),
-               OTConf('items.description', RegexTransform, regex='(\w{5,100})')]
+        ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),
+               OTConf('items.item_no', FloatTransform, update_element=True, update_key='item_no_float'),
+               OTConf('items.description', RegexTransform, regex='(\w{5,100})', update_element=True,
+                      update_key='keywords')]
         OTManager(ops).process(file_executor).print()
 
 
