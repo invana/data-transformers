@@ -48,3 +48,10 @@ class ReadFromMongo(Executor):
     def disconnect(self):
         if isinstance(self._client, MongoClient):
             self._client.close()
+
+
+class WriteToFile(Executor):
+    def write(self, objects, file_name):
+        with open(file_name, 'w') as fp:
+            json.dump(objects, fp, indent=4)
+            fp.close()

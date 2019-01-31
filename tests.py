@@ -1,8 +1,12 @@
 # Created by venkataramana on 29/01/19.
 import json
 
-from executors import ReadFromFile, ReadFromMongo
-from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, OutputRenderer
+from jsonbender import S, Context
+from jsonbender.list_ops import ForallBend
+
+from executors import ReadFromFile, ReadFromMongo, WriteToFile
+from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, OutputRenderer, \
+    OutputBender
 
 
 class ReadFromFileTest:
@@ -38,4 +42,29 @@ class OutputRendererTest:
             ot_manager.results), indent=4))
 
 
-OutputRendererTest()
+class OutputBenderTest:
+    def __init__(self):
+        file_executor = ReadFromFile('samples/crawler_data.json')
+        ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),
+               OTConf('items.item_no', FloatTransform, update_element=True, update_key='item_no_float'),
+               OTConf('items.description', RegexTransform, regex='(\w{5,100})', update_element=True,
+                      update_key='keywords')]
+        ot_manager = OTManager(ops).process(file_executor)
+        MAPPING = [
+            {
+                '_$': S('items') >> ForallBend({
+                    'url': S('url'),
+                    'title': S('title'),
+                    'description': S('description'),
+                    'item_no': S('item_no'),
+                    'client_info': Context() >> S('client_info')
+                })
+            }
+        ]
+        results = OutputBender(include=MAPPING).expand(ot_manager.results)
+        print(json.dumps(results, indent=4))
+        file_writer = WriteToFile()
+        file_writer.write(results, 'crawl_data_2.json')
+
+
+OutputBenderTest()

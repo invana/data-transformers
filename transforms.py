@@ -1,8 +1,9 @@
 # Created by venkataramana on 29/01/19.
 import re
 from copy import deepcopy
-from itertools import chain
 from urllib import parse
+
+from jsonbender import bend
 
 
 class FTBase:
@@ -216,3 +217,21 @@ class OTManager:
         for _object in self.results:
             for item in _object['items']:
                 print('item', item)
+
+
+class OutputBender(OTBase):
+    def expand(self, objects):
+        if isinstance(self.include, list):
+            if self.include.__len__() == 0:
+                raise ValueError('include should not empty')
+            for item in self.include:
+                if isinstance(item, dict):
+                    if '_$' not in item:
+                        raise KeyError("_$ not exist in include item")
+                else:
+                    raise ValueError('item must of dict type')
+        else:
+            raise TypeError('include must be list')
+        if not isinstance(objects, list):
+            raise ValueError("objects must be list")
+        return [[bend(_mapping['_$'], _object, context=_object) for _object in objects] for _mapping in self.include]
