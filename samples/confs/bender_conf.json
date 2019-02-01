@@ -1,0 +1,57 @@
+[
+    {
+        "_$": {
+            "_pipe": [
+                {
+                    "class": "__S",
+                    "attrs": [
+                        "items"
+                    ]
+                },
+                {
+                    "class": "__ForallBend",
+                    "attrs": {
+                        "url": {
+                            "class": "__S",
+                            "attrs": [
+                                "url"
+                            ]
+                        },
+                        "title": {
+                            "class": "__S",
+                            "attrs": [
+                                "title"
+                            ]
+                        },
+                        "description": {
+                            "class": "__S",
+                            "attrs": [
+                                "description"
+                            ]
+                        },
+                        "item_no": {
+                            "class": "__S",
+                            "attrs": [
+                                "item_no"
+                            ]
+                        },
+                        "client_info": {
+                            "_pipe": [
+                                {
+                                    "class": "__Context",
+                                    "attrs": null
+                                },
+                                {
+                                    "class": "__S",
+                                    "attrs": [
+                                        "client_info"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    }
+]

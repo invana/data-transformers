@@ -6,7 +6,7 @@ from jsonbender.list_ops import ForallBend
 
 from executors import ReadFromFile, ReadFromMongo, WriteToFile
 from transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, OutputRenderer, \
-    OutputBender
+    OutputBender, JsonBenderConfParser
 
 
 class ReadFromFileTest:
@@ -67,4 +67,20 @@ class OutputBenderTest:
         file_writer.write(results, 'crawl_data_2.json')
 
 
-OutputBenderTest()
+class JsonBenderConfParserTest:
+    def __init__(self):
+        file_executor = ReadFromFile('samples/crawler_data.json')
+        ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),
+               OTConf('items.item_no', FloatTransform, update_element=True, update_key='item_no_float'),
+               OTConf('items.description', RegexTransform, regex='(\w{5,100})', update_element=True,
+                      update_key='keywords')]
+        ot_manager = OTManager(ops).process(file_executor)
+        MAPPING = JsonBenderConfParser('samples/confs/bender_conf.json').parse()
+        print(MAPPING)
+        results = OutputBender(include=MAPPING).expand(ot_manager.results)
+        print(json.dumps(results, indent=4))
+        file_writer = WriteToFile()
+        file_writer.write(results, 'crawl_data_2.json')
+
+
+JsonBenderConfParserTest()
