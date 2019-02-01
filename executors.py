@@ -19,7 +19,10 @@ class ReadFromFile(Executor):
         self._file_path = file_path
 
     def read(self):
-        return json.load(open(self._file_path))
+        with open(self._file_path) as fp:
+            data = json.load(fp)
+            fp.close()
+        return data
 
     def disconnect(self):
         pass
@@ -53,5 +56,5 @@ class ReadFromMongo(Executor):
 class WriteToFile(Executor):
     def write(self, objects, file_name):
         with open(file_name, 'w') as fp:
-            json.dump(objects, fp, indent=4)
+            json.dump(objects, fp)
             fp.close()
