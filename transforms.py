@@ -41,6 +41,8 @@ class UrlDomainTransformer(FTBase):
     """
         Url Domain name Transformer
 
+        Transforms the given url into domain name
+
     """
 
     def process(self, element):
@@ -58,6 +60,8 @@ class UrlDomainTransformer(FTBase):
 class FloatTransform(FTBase):
     """
         Integer Transformer
+
+        Transform the given value into float type
 
         string examples:
             works with: '1234.123'
@@ -83,6 +87,8 @@ class IntTransform(FTBase):
     """
         Integer Transformer
 
+        Transforms the given value into int type
+
         string examples:
             works with: '1234'
             not works:  '$1234'
@@ -104,6 +110,13 @@ class IntTransform(FTBase):
 
 
 class RegexTransform(FTBase):
+    """
+        Regular Expression Transformer
+
+        Transforms the given value by applying the given regular expression
+
+    """
+
     def __init__(self, key, regex=None, *args, **kwargs):
         super(RegexTransform, self).__init__(key, *args, **kwargs)
         self._regex = regex or kwargs.get('regex', None) or '(\d+\.\d+)'
@@ -121,6 +134,15 @@ class RegexTransform(FTBase):
 
 
 class OTBase:
+    """
+        Object Transformer Base class
+
+        Arguments
+        ---------
+        include - fields to include or mapping config for json bender
+
+    """
+
     def __init__(self, include=None):
         self.include = include
 
@@ -129,6 +151,15 @@ class OTBase:
 
 
 class OutputRenderer(OTBase):
+    """
+        Renders the output into required form
+
+        Arguments
+        ---------
+
+        inherits super class methods
+
+    """
 
     def _projection(self, _object, _keys):
         return {key: _object.get(key, None) for key in _keys}
@@ -179,6 +210,17 @@ class OutputRenderer(OTBase):
 
 
 class OTConf:
+    """
+        Object Transformer config class
+
+        Arguments
+        ---------
+
+        key_path - dot notation of specific field
+        cls - Transform class that need to be applied
+
+    """
+
     def __init__(self, key_path, cls, *args, **kwargs):
         self.key_path = key_path
         self.cls = cls
@@ -190,6 +232,16 @@ class OTConf:
 
 
 class OTManager:
+    """
+        Object Transform Manager Renders the output into required form
+
+        Arguments
+        ---------
+
+        ops - list of OTConf objects
+
+    """
+
     def __init__(self, ops):
         self._ops = ops
         self.results = []
@@ -222,6 +274,16 @@ class OTManager:
 
 
 class OutputBender(OTBase):
+    """
+        Output Bender Render the output into required form using jsonbender.
+
+        Arguments
+        ---------
+
+        include - json bender mapping config
+
+    """
+
     def expand(self, objects):
         if isinstance(self.include, list):
             if self.include.__len__() == 0:
@@ -240,6 +302,16 @@ class OutputBender(OTBase):
 
 
 class JsonBenderConfParser:
+    """
+        JsonBenderConfParser parses the given conf and converts it into an actual jsonbender mapping config.
+
+        Arguments
+        ---------
+
+        file_path - file path to json config file
+
+    """
+
     def __init__(self, file_path):
         self.file_path = file_path
 
