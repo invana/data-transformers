@@ -28,7 +28,7 @@ The behaviour of the field transformers should be as follow:
         {
             "url": "https://www.sarvgyan.com/courses/engineering/food-technology",
             "title": "Food Technology - Bright Future Ahead for Science Students",
-            "description": "Introduction “",
+            "description": "Introduction",
             "item_no": 1
         },
         {
@@ -59,7 +59,7 @@ The behaviour of the field transformers should be as follow:
             "url": "https://www.sarvgyan.com/courses/engineering/food-technology",
             "domain": "www.sarvgyan.com", /* new field created from url field */
             "title": "Food Technology - Bright Future Ahead for Science Students",
-            "description": "Introduction “",
+            "description": "Introduction",
             "item_no": 1
         },
         {
@@ -91,7 +91,7 @@ The behaviour of the field transformers should be as follow:
         {
             "url": "https://www.sarvgyan.com/courses/engineering/food-technology",
             "title":  "Bright Future Ahead for Science Students", /* title cleaned and updated */
-            "description": "Introduction “",
+            "description": "Introduction",
             "item_no": 1
         },
         {
@@ -136,7 +136,7 @@ inside are dictionaries.
         {
             "url": "https://www.sarvgyan.com/courses/engineering/food-technology",
             "title": "Food Technology - Bright Future Ahead for Science Students",
-            "description": "Introduction “",
+            "description": "Introduction",
             "item_no": 1
         },
         {
@@ -162,7 +162,7 @@ inside are dictionaries.
     {
         "url": "https://www.sarvgyan.com/courses/engineering/food-technology",
         "title": "Food Technology - Bright Future Ahead for Science Students",
-        "description": "Introduction “",
+        "description": "Introduction",
         "item_no": 1,
         "client_info": {
             "client_id": "tcl",

@@ -21,10 +21,8 @@ class JsonBenderConfParserTest(TestCase):
         results = OutputBender(include=MAPPING).expand(ot_manager.results)
         file_executor = ReadFromFile('samples/tests_results_expected/sample5.json')
         expected = file_executor.read()
-        # print(results)
-        # print(expected)
         self.assertListEqual(results, expected)
 
 #
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()
