@@ -13,8 +13,9 @@ cache: pip
 install:
    - pip install tox-travis
    - pip install codecov
+   - pip install -r requirements.txt
 
 script:
-   - tox --version
-   - tox
+   - python runtests.py
+   - coverage run runtests.py
    - if [ ${TRAVIS} ]; then  codecov -t "158e5e35-cf6c-4386-9c94-a1bc649b91e4";  fi

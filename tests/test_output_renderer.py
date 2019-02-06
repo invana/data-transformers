@@ -4,10 +4,13 @@ from unittest import TestCase
 import json
 
 from transformers.executors import ReadFromFile
-from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, OutputRenderer
+from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform, RegexTransform, OTManager, \
+    OutputRenderer
 
 
 class OutputRendererTest(TestCase):
+    maxDiff = None
+
     def testSample(self):
         file_executor = ReadFromFile('samples/crawler_data.json')
         ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),

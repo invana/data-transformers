@@ -8,7 +8,9 @@ from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform
 
 
 class ReadFromMongoTest(TestCase):
-    def _(self):
+    maxDiff = None
+
+    def testSample(self):
         mongo_executor = ReadFromMongo('mongodb://127.0.0.1:27017/crawler_data', 'crawler_data', 'website_data')
         mongo_executor.connect()
         ops = [OTConf('items.url', UrlDomainTransformer), OTConf('items.item_no', FloatTransform),

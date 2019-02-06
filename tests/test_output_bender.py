@@ -11,6 +11,9 @@ from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform
 
 
 class OutputBenderTest(TestCase):
+
+    maxDiff = None
+
     def testSample(self):
         file_executor = ReadFromFile('samples/crawler_data.json')
         ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),

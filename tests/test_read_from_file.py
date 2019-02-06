@@ -8,6 +8,7 @@ from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform
 
 
 class ReadFromFileTest(TestCase):
+    maxDiff = None
 
     def testSample(self):
         file_executor = ReadFromFile('samples/crawler_data.json')

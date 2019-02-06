@@ -7,6 +7,9 @@ from transformers.transforms import UrlDomainTransformer, OTConf, FloatTransform
 
 
 class JsonBenderConfParserTest(TestCase):
+
+    maxDiff = None
+
     def testSample(self):
         file_executor = ReadFromFile('samples/crawler_data.json')
         ops = [OTConf('items.url', UrlDomainTransformer, update_element=True, update_key="domain"),
@@ -18,8 +21,10 @@ class JsonBenderConfParserTest(TestCase):
         results = OutputBender(include=MAPPING).expand(ot_manager.results)
         file_executor = ReadFromFile('samples/tests_results_expected/sample5.json')
         expected = file_executor.read()
+        # print(results)
+        # print(expected)
         self.assertListEqual(results, expected)
 
-
-if __name__ == '__main__':
-    unittest.main()
+#
+# if __name__ == '__main__':
+#     unittest.main()
