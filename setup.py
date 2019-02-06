@@ -1,7 +1,5 @@
 from setuptools import setup
 
-# dependencies = [p.rstrip('\n') for p in open('./requirements.txt')]
-
 setup(
     name='transformers',
     version='0.0.0a',
@@ -14,6 +12,5 @@ setup(
     install_requires=[
         'JSONBender==0.9.3',
         'pymongo==3.7.2'
-
     ],
 )
