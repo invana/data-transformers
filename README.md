@@ -3,6 +3,8 @@
 
 A library to transforming JSON with parsers.
 
+[![Build Status](https://travis-ci.org/invanalabs/data-transformers.svg?branch=master)](https://travis-ci.org/invanalabs/data-transformers) 
+[![codecov](https://codecov.io/gh/invanalabs/data-transformers/branch/master/graph/badge.svg)](https://codecov.io/gh/invanalabs/data-transformers) 
 
 ## install
 
