@@ -1,0 +1,22 @@
+sudo: true
+
+language: python
+
+python:
+   - "2.7"
+
+dist: trusty
+
+addons:
+  chrome: stable
+
+cache: pip
+
+install:
+   - pip install tox-travis
+   - pip install codecov
+
+script:
+   - tox --version
+   - tox
+   - if [ ${TRAVIS} ]; then  codecov -t "158e5e35-cf6c-4386-9c94-a1bc649b91e4";  fi
