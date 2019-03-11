@@ -1,6 +1,5 @@
 # Created by venkataramana on 04/02/19.
 from jsonbender import bend
-
 from transformers.managers import OTBase
 
 

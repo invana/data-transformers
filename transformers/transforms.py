@@ -6,6 +6,7 @@ from urllib import parse
 
 from jsonbender import bend, S, Context
 from jsonbender.list_ops import ForallBend
+from slugify import slugify
 
 
 class FTBase:
@@ -35,6 +36,22 @@ class FTBase:
 
     def process(self, element):
         raise NotImplementedError
+
+
+class SlugField(FTBase):
+    """
+        Integer Transformer
+
+        Transform the given value into slug type
+
+        string examples:
+            works with: '1234.123'
+            not works:  '$1234.123'
+    """
+
+    def process(self, element):
+        val = element.get(self._key, None)
+        return slugify(val)
 
 
 class UrlDomainTransformer(FTBase):

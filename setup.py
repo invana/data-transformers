@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='transformers',
-    version='0.0.0a',
+    version='0.0.0b',
     packages=['transformers', 'tests'],
     url='https://github.com/invanalabs/data-transformers',
     license='MIT',
@@ -11,6 +11,8 @@ setup(
     description='A library to transforming JSON with parsers.',
     install_requires=[
         'JSONBender==0.9.3',
-        'pymongo==3.7.2'
+        'pymongo',
+        'python-slugify'
+
     ],
 )
