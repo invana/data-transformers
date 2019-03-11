@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='transformers',
+    name='invana-transformers',
     version='0.0.0b',
     packages=['transformers', 'tests'],
     url='https://github.com/invanalabs/data-transformers',
